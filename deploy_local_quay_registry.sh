@@ -9,7 +9,7 @@ sudo yum module install -y container-tools
 
 
 #Login to registry: 
-podman login --authfile ~/.docker/config.json -u  $REGISTRY_USER -p $REGISTRY_TOKEN https://registry.ci.openshift.org
+sudo podman login --authfile /root/.docker/config.json -u  $REGISTRY_USER -p $REGISTRY_TOKEN https://registry.ci.openshift.org
 
 
 
