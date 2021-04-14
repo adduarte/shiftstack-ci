@@ -57,3 +57,6 @@ sudo podman run --rm -it --name quay_config -p ${OUTSIDEPORT}:8080 registry.redh
 
 #Continue on the web config of quay. use OUTSIDEPORT to access quay_config. 
 echo "continue with instructions at https://access.redhat.com/documentation/en-us/red_hat_quay/3.4/html/deploy_red_hat_quay_for_proof-of-concept_non-production_purposes/getting_started_with_red_hat_quay"
+
+echo "Once you have succesfully configured quay, uploaded the configuration bundle to this host, and stopped the quay_config, press enter to continue"
+read -p "Press [Enter] key to continue, or ^C to quit"
