@@ -49,3 +49,6 @@ sudo podman exec -it postgresql-quay /bin/bash -c 'echo "CREATE EXTENSION IF NOT
 #Use podman to run the Redis container, specifying the port and password:
 
 sudo podman run -d --rm --name redis   -p 6379:6379 -e REDIS_PASSWORD=strongpassword registry.redhat.io/rhel8/redis-5:1
+
+# Configure Red Hat Quay
+sudo podman run --rm -it --name quay_config -p 8080:8080 registry.redhat.io/quay/quay-rhel8:v3.4.3 config secret
