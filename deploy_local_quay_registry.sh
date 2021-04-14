@@ -52,3 +52,6 @@ sudo podman run -d --rm --name redis   -p 6379:6379 -e REDIS_PASSWORD=strongpass
 
 # Configure Red Hat Quay
 sudo podman run --rm -it --name quay_config -p 8080:8080 registry.redhat.io/quay/quay-rhel8:v3.4.3 config secret
+
+#Continue on the web config of quay
+echo "continue with instructions at https://access.redhat.com/documentation/en-us/red_hat_quay/3.4/html/deploy_red_hat_quay_for_proof-of-concept_non-production_purposes/getting_started_with_red_hat_quay"
