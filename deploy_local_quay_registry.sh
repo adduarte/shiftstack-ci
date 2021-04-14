@@ -22,7 +22,7 @@ sudo firewall-cmd --permanent --add-port=8443/tcp
 sudo firewall-cmd --permanent --add-port=8080/tcp
 sudo firewall-cmd --permanent --add-port=443/tcp
 sudo firewall-cmd --reload
-# or iptables if being used: 
+# or iptables if being used: (note the port numbers, if you decide to exapose quay on a different port fix here as well)
 sudo iptables -A INPUT -p tcp -m multiport --dports 8443,8080,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 
 # deploy Postgress for datastorage 
@@ -50,8 +50,9 @@ sudo podman exec -it postgresql-quay /bin/bash -c 'echo "CREATE EXTENSION IF NOT
 
 sudo podman run -d --rm --name redis   -p 6379:6379 -e REDIS_PASSWORD=strongpassword registry.redhat.io/rhel8/redis-5:1
 
-# Configure Red Hat Quay
-sudo podman run --rm -it --name quay_config -p 8080:8080 registry.redhat.io/quay/quay-rhel8:v3.4.3 config secret
+# Configure Red Hat Quay. Set OUTSIDEPORT accordingly. This is the port wich will be used to access quay_config
+OUTSIDEPORT=8181
+sudo podman run --rm -it --name quay_config -p ${OUTSIDEPORT}:8080 registry.redhat.io/quay/quay-rhel8:v3.4.3 config secret
 
-#Continue on the web config of quay
+#Continue on the web config of quay. use OUTSIDEPORT to access quay_config. 
 echo "continue with instructions at https://access.redhat.com/documentation/en-us/red_hat_quay/3.4/html/deploy_red_hat_quay_for_proof-of-concept_non-production_purposes/getting_started_with_red_hat_quay"
