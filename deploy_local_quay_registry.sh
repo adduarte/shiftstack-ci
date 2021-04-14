@@ -13,7 +13,7 @@ sudo yum module install -y container-tools
 #Login to registry: 
 
 sudo podman login --authfile /root/.docker/config.json -u  $REGISTRY_USER -p $REGISTRY_TOKEN https://registry.ci.openshift.org
-sudo podman login --authfile /root/.docker/config.json -u $REDHATIO -p $REDHATIO_PASSWD registry.redhat.io
+sudo podman login --authfile /root/.docker/config.json -u $REDHATIO_USER -p $REDHATIO_PASSWD registry.redhat.io
 
 
 #Set access from outside host if needed:
@@ -81,3 +81,6 @@ sudo podman run -d --rm -p ${EXTERNAL_PORT}:${INTERNAL_PORT}  \
    -v $QUAY/config:/conf/stack:Z \
    -v $QUAY/storage:/datastorage:Z \
    registry.redhat.io/quay/quay-rhel8:v3.4.3
+   
+ # add credentials to auth file
+ sudo podman login --authfile /root/.docker/config.json  $(hostname):${EXTERNAL_PORT}
