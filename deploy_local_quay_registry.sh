@@ -42,5 +42,10 @@ $ sudo podman run -d --rm --name postgresql-quay \
 
 # Ensure that the Postgres pg_trgm module is installed, as it is required by Quay:
 
-$ sudo podman exec -it postgresql-quay /bin/bash -c 'echo "CREATE EXTENSION IF NOT EXISTS pg_trgm" | psql -d quay -U postgres'
+sudo podman exec -it postgresql-quay /bin/bash -c 'echo "CREATE EXTENSION IF NOT EXISTS pg_trgm" | psql -d quay -U postgres'
 
+
+#Setup Redis
+#Use podman to run the Redis container, specifying the port and password:
+
+sudo podman run -d --rm --name redis   -p 6379:6379 -e REDIS_PASSWORD=strongpassword registry.redhat.io/rhel8/redis-5:1
