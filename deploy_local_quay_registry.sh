@@ -58,5 +58,26 @@ sudo podman run --rm -it --name quay_config -p ${OUTSIDEPORT}:8080 registry.redh
 #Continue on the web config of quay. use OUTSIDEPORT to access quay_config. 
 echo "continue with instructions at https://access.redhat.com/documentation/en-us/red_hat_quay/3.4/html/deploy_red_hat_quay_for_proof-of-concept_non-production_purposes/getting_started_with_red_hat_quay"
 
-echo "Once you have succesfully configured quay, uploaded the configuration bundle to this host, and stopped the quay_config, press enter to continue"
+echo "Once you have succesfully configured quay, uploaded the configuration bundle (quay-config.tar.gz) to this host, and stopped the quay_config, press enter to continue"
 read -p "Press [Enter] key to continue, or ^C to quit"
+
+
+#Deploy Red Hat Quay
+
+#Prepare config folder
+mkdir $QUAY/config
+tar -xzf quay-config.tar.gz -C $QUAY/config
+
+# Prepare local storage for image data
+mkdir $QUAY/storage
+setfacl -m u:1001:-wx $QUAY/storage
+
+#Deploy quay with the desired ports
+EXTERNAL_PORT=8181
+INTERNAL_PORT=8181
+
+sudo podman run -d --rm -p ${EXTERNAL_PORT}:${INTERNAL_PORT}  \
+   --name=quay \
+   -v $QUAY/config:/conf/stack:Z \
+   -v $QUAY/storage:/datastorage:Z \
+   registry.redhat.io/quay/quay-rhel8:v3.4.3
