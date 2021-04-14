@@ -11,5 +11,13 @@ sudo yum module install -y container-tools
 #Login to registry: 
 podman login --authfile ~/.docker/config.json -u  $REGISTRY_USER -p $REGISTRY_TOKEN https://registry.ci.openshift.org
 
-#or iptables if being used: 
+
+
+#Set access from outside host if needed:
+# if FirewallD is running
+sudo firewall-cmd --permanent --add-port=8443/tcp
+sudo firewall-cmd --permanent --add-port=8080/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp
+sudo firewall-cmd --reload
+# or iptables if being used: 
 sudo iptables -A INPUT -p tcp -m multiport --dports 8443,8080,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
